@@ -18,6 +18,15 @@ fun MyMathsApp() = ServerFilters.CatchLensFailure.then(
         "/add" bind Method.GET to {
             val valuesToAdd = Query.int().multi.defaulted("value", listOf())(it)
             Response(Status.OK).body(valuesToAdd.sum().toString())
+        },
+        "/multiply" bind Method.GET to {
+            val valuesToMultiply = Query.int().multi.defaulted("value", listOf())(it)
+            Response(Status.OK).body(
+                valuesToMultiply
+                    .ifEmpty { listOf(0) }
+                    .reduce { acc, i -> acc * i }
+                    .toString()
+            )
         }
     )
 )

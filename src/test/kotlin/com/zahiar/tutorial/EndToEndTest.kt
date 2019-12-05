@@ -39,4 +39,11 @@ class EndToEndTest {
         assertThat(result, hasBody("3"))
     }
 
+    @Test
+    fun `responds to request to 'multiply' endpoint`() {
+        val result = client(Request(Method.GET, "http://localhost:${server.port()}/multiply?value=1&value=3"))
+        assertThat(result, hasStatus(Status.OK))
+        assertThat(result, hasBody("3"))
+    }
+
 }
